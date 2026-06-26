@@ -1,0 +1,53 @@
+services:
+  api:
+    build: ./api
+    ports:
+      - "20642:8000"
+    environment:
+      DATABASE_URL: postgresql://civic:civic@postgres:5432/civic_fix
+      JWT_SECRET: dev-secret-change-in-production-min-32-chars
+      CORS_ORIGINS: http://localhost:20640,http://127.0.0.1:20640
+      UPLOAD_DIR: /data/uploads
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - civic_uploads:/data/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  web:
+    build: ./web
+    ports:
+      - "20640:3000"
+    environment:
+      API_INTERNAL_URL: http://api:8000
+      NEXT_PUBLIC_API_URL: ""
+    depends_on:
+      - api
+
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - "20644:5432"
+    environment:
+      POSTGRES_USER: civic
+      POSTGRES_PASSWORD: civic
+      POSTGRES_DB: civic_fix
+    volumes:
+      - civic_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U civic -d civic_fix"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "20645:6379"
+
+volumes:
+  civic_pg:
+  civic_uploads:

@@ -1,0 +1,13 @@
+cities:
+  moscow:
+    name: Москва
+    bbox: [55.49, 37.32, 55.95, 37.97]
+    default: true
+    channels:
+      - id: moscow_nash_gorod
+        name: Наш город
+        url: https://gorod.mos.ru/
+      - id: moscow_epriemnaya
+        name: Электронная приёмная
+        url: https://www.mos.ru/feedback/reception/
+  # v2: mo, spb, ...
