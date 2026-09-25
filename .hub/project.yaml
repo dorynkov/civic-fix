@@ -1,0 +1,10 @@
+id: civic-fix
+scope: personal
+name: civic-fix
+status: active
+hub: dev-hub-personal
+related: [admin-tools]
+agents:
+  primary: cursor
+  cloud: false
+  entry: AGENTS.md
