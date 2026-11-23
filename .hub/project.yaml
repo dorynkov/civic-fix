@@ -2,7 +2,7 @@ id: civic-fix
 scope: personal
 name: civic-fix
 status: active
-hub: dev-hub-personal
+hub: hub
 related: [admin-tools]
 agents:
   primary: cursor
